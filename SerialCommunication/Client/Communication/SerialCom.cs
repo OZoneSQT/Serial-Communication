@@ -100,16 +100,25 @@ namespace Client.Communication
         // DEMO, to be updated, impliment parsing and crypto
         // https://docs.microsoft.com/en-us/dotnet/api/system.io.ports.serialport.write?view=netframework-4.8
         // eks: public void Write(string text);
-        public void WriteToPort(Com com)
+        public void TXToPort(string text)
         {
-            serialPort.Write(com.buffer);
+            try
+            {
+                serialPort.Write(text);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exception Thrown, when trying to send via serialport: {portId}\n>{e.StackTrace}");
+            }
+
+            
         }
 
 
         // RX
         // DEMO, to be updated, impliment parsing and crypto
         // https://docs.microsoft.com/en-us/dotnet/api/system.io.ports.serialport.datareceived?view=netframework-4.8
-        public void ReadFromPort()
+        public void RXFromPort()
         {
             serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
         }
